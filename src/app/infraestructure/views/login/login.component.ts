@@ -2,7 +2,6 @@ import { Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginFormComponent } from '../../../application/components/login-form/login-form.component';
 import { IUserSession } from '../../../domain/models/user-session.interface';
-import { tap } from 'rxjs';
 import { AuthPort } from '../../../domain/ports/auth/auth.port';
 import { AUTH_PORT_TOKEN } from '../../../app.config';
 
@@ -19,9 +18,7 @@ export class LoginComponent {
     @Inject(AUTH_PORT_TOKEN) private authPort: AuthPort) { }
 
   doLogin(loginInformation: IUserSession): void {
-    this.authPort.login(loginInformation).pipe(
-      tap(() => this.goToDashboard())
-    ).subscribe();
+    this.authPort.login(loginInformation).then(() => this.goToDashboard())
   }
 
   goToDashboard(): void {

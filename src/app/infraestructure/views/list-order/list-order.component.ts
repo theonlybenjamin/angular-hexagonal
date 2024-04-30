@@ -5,8 +5,6 @@ import { OrderPort } from '../../../domain/ports/order/order.port';
 import { ISearchOrder } from '../../../domain/models/order.interface';
 import { ListOrderTableComponent } from '../../../application/components/list-order-table/list-order-table.component';
 import { OrderDTO } from '../../../domain/ports/order/order.dto';
-import { concatMap, tap } from 'rxjs';
-import { Observable } from '../../../domain/mask/observable.mask';
 
 @Component({
   selector: 'app-list-order',
@@ -26,30 +24,23 @@ export class ListOrderComponent {
 
   searchOrder(searchRangeInformation: ISearchOrder): void {
     this.lastSearchRangeInformation = searchRangeInformation;
-    this.executeListOrdeSearch(searchRangeInformation).subscribe();
+    this.executeListOrderSearch(searchRangeInformation);
   }
 
-  private executeListOrdeSearch(searchRangeInformation: ISearchOrder): Observable<OrderDTO[]> {
-    return this.orderPort.listOrderPerDate(searchRangeInformation).pipe(tap(result => this.listOrdeSearchResult = result));
+  private async executeListOrderSearch(searchRangeInformation: ISearchOrder): Promise<OrderDTO[]> {
+    const result = await this.orderPort.listOrderPerDate(searchRangeInformation);
+    return this.listOrdeSearchResult = result;
   }
 
   cancelOrder(id: number): void {
-    this.orderPort.updateOrderState(id, 2)
-    .pipe(
-      concatMap(() => this.executeListOrdeSearch(this.lastSearchRangeInformation))
-    ).subscribe();
+    this.orderPort.updateOrderState(id, 2).then(() => this.executeListOrderSearch(this.lastSearchRangeInformation));
   }
 
   deleteOrder(id: number): void {
-    this.orderPort.deleteOrder(id).pipe(
-      concatMap(() => this.executeListOrdeSearch(this.lastSearchRangeInformation))
-    ).subscribe();
+    this.orderPort.deleteOrder(id).then(() => this.executeListOrderSearch(this.lastSearchRangeInformation));
   }
 
   activateOrder(id: number): void {
-    this.orderPort.updateOrderState(id, 1)
-    .pipe(
-      concatMap(() => this.executeListOrdeSearch(this.lastSearchRangeInformation))
-    ).subscribe();
+    this.orderPort.updateOrderState(id, 1).then(() => this.executeListOrderSearch(this.lastSearchRangeInformation));
   }
 }

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, of } from 'rxjs';
-import { Observable } from '../../domain/mask/observable.mask';
+import { BehaviorSubject } from 'rxjs';
 import { ProductsTable } from '../../domain/models/product.interface';
 import { ProductoDTO } from '../../domain/ports/products/product.dto';
 

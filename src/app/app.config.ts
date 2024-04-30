@@ -10,7 +10,10 @@ import { ApiAuthAdapter } from './infraestructure/http/auth.adapter';
 import { OrderAdapter } from './infraestructure/http/order.adater';
 import { DocumentTypesPort } from './domain/ports/types-document/document-types.port';
 import { DocumentTypesAdapter } from './infraestructure/http/document-types.adapter';
-//Al utilizar InjectionToken, puedes asociar cualquier tipo, incluidas interfaces, con un token específico. Esto permite que Angular resuelva correctamente la dependencia cuando se inyecta en un componente, servicio, etc.
+import { ProductPort } from './domain/ports/products/product.port';
+import { ProductAdapter } from './infraestructure/http/product.adapter';
+//Al utilizar InjectionToken, puedes asociar cualquier tipo, incluidas interfaces, con un token específico.
+// Esto permite que Angular resuelva correctamente la dependencia cuando se inyecta en un componente, servicio, etc.
 export const AUTH_PORT_TOKEN = new InjectionToken<AuthPort>('AuthPort');
 export const ORDER_PORT_TOKEN = new InjectionToken<AuthPort>('OrderPort');
 export const appConfig: ApplicationConfig = {
@@ -29,6 +32,10 @@ export const appConfig: ApplicationConfig = {
     {
       provide: DocumentTypesPort,
       useClass: DocumentTypesAdapter
+    }, 
+    {
+      provide: ProductPort,
+      useClass: ProductAdapter
     },
     provideAnimationsAsync(),
     {provide: MAT_DATE_LOCALE, useValue: 'es-PE'}

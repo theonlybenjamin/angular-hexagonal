@@ -1,6 +1,5 @@
 import { Component, Inject, ViewChild } from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
-import { DocumentTypesAdapter } from '../../http/document-types.adapter';
 import { DocumentTypesDTO } from '../../../domain/ports/types-document/document-types.dto';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
@@ -15,6 +14,7 @@ import { IOrder, IOrderDetail } from '../../../domain/models/order.interface';
 import { Router } from '@angular/router';
 import { OrderPort } from '../../../domain/ports/order/order.port';
 import { ORDER_PORT_TOKEN } from '../../../app.config';
+import { DocumentTypesPort } from '../../../domain/ports/types-document/document-types.port';
 
 @Component({
   selector: 'app-register-order',
@@ -33,7 +33,7 @@ export class RegisterOrderComponent {
   public igv: number = 0;
   public total: number = 0;
   constructor(
-    private documentTypeAdapter: DocumentTypesAdapter,
+    private documentTypeAdapter: DocumentTypesPort,
     public dialogMaterial: MatDialog,
     public tableProductsSelected: TableProductsSelectedService,
     @Inject(ORDER_PORT_TOKEN) public orderAdapter: OrderPort,
@@ -50,7 +50,7 @@ export class RegisterOrderComponent {
   }
 
   getTypesOfDocuments(): void {
-    this.documentTypeAdapter.getTypesOfDocuments().subscribe(documentTypes => this.documentTypes = documentTypes);
+    this.documentTypeAdapter.getTypesOfDocuments().then(documentTypes => this.documentTypes = documentTypes);
   }
 
   openSearchProductDialog(): void {
@@ -73,7 +73,7 @@ export class RegisterOrderComponent {
       orderDetail: this.changeAllSelectedProduct(this.selectedProducts)
     }
     order.registerDate = new Date(order.registerDate).toISOString()
-    this.orderAdapter.registerOrder(order).subscribe(() => this.reloadRoute());
+    this.orderAdapter.registerOrder(order).then(() => this.reloadRoute());
   }
 
   reloadRoute(): void {

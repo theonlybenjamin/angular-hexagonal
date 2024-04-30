@@ -2,13 +2,13 @@ import { Component, inject } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { ProductAdapter } from '../../http/product.adapter';
 import { ProductoDTO } from '../../../domain/ports/products/product.dto';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { TableProductsSelectedService } from '../../../application/services/table-products-selected.service';
+import { ProductPort } from '../../../domain/ports/products/product.port';
 
 @Component({
   selector: 'app-search-product-dialog',
@@ -18,15 +18,14 @@ import { TableProductsSelectedService } from '../../../application/services/tabl
   styleUrl: './search-product-dialog.component.scss'
 })
 export class SearchProductDialogComponent {
-  private productAdapter: ProductAdapter = inject(ProductAdapter);
   private tableProductsSelected: TableProductsSelectedService = inject(TableProductsSelectedService);
   public productsResultList: MatTableDataSource<ProductoDTO> = new MatTableDataSource<ProductoDTO>;
   public displayedColumns: string[] = ['select','id', 'name', 'price'];
   public productName: string = '';
   public selection = new SelectionModel<ProductoDTO>(true, []);
-
+  private productPort = inject(ProductPort);
   searchProductoByName(): void {
-    this.productAdapter.getProductsByCoincidence(this.productName).subscribe(
+    this.productPort.getProductsByCoincidence(this.productName).then(
       products => this.productsResultList.data = products
     );
   }
