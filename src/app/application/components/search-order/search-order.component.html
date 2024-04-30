@@ -1,0 +1,21 @@
+<div class="inputs-container">
+    <mat-form-field class="input-field">
+        <mat-label>Ingresa un rango de fecha</mat-label>
+        <mat-date-range-input [formGroup]="rangeDate" [rangePicker]="picker">
+          <input matStartDate formControlName="start" placeholder="Fecha inicio">
+          <input matEndDate formControlName="end" placeholder="Fecha fin">
+        </mat-date-range-input>
+        <mat-hint>DD/MM/YYYY – DD/MM/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      
+        @if (rangeDate.controls['start'].hasError('matStartDateInvalid')) {
+          <mat-error>Fecha de inicio invalida</mat-error>
+        }
+        @if (rangeDate.controls['end'].hasError('matEndDateInvalid')) {
+          <mat-error>Fecha de fin invalida</mat-error>
+        }
+      </mat-form-field>
+    <button mat-raised-button disabledInteractive
+    matTooltip="Seleccione un rango de busqueda" color="primary" class="search-button" [disabled]="rangeDate.invalid" (click)="searchOrder()">Buscar</button>
+</div>

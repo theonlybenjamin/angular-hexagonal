@@ -1,0 +1,44 @@
+<form [formGroup]="registForm">
+    <div class="inputs-container">
+        <mat-form-field class="field">
+            <mat-label>Nombre de cliente</mat-label>
+            <input matInput formControlName="clientName">
+        </mat-form-field>
+        <mat-form-field class="field">
+            <mat-label>Tipo de documento</mat-label>
+            <mat-select formControlName="documentTypeId">
+                @for (document of documentTypes; track $index) {
+                <mat-option value="{{document.id}}">{{document.name}}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="field">
+            <mat-label>Numero de documento</mat-label>
+            <input matInput formControlName="documentNumber">
+        </mat-form-field>
+        <mat-form-field class="field">
+            <mat-label>Choose a date</mat-label>
+            <input matInput [matDatepicker]="datepicker" formControlName="registerDate">
+            <mat-hint>DD/MM/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
+            <mat-datepicker #datepicker>
+                <mat-datepicker-actions>
+                    <button mat-button matDatepickerCancel>Cancel</button>
+                    <button mat-raised-button color="primary" matDatepickerApply>Aplicar</button>
+                </mat-datepicker-actions>
+            </mat-datepicker>
+        </mat-form-field>
+        <div class="field radio-button">
+            <label id="example-radio-group-label">Boleta o Factura:</label>
+            <mat-radio-group aria-labelledby="example-radio-group-label" formControlName="receiptType">
+                <mat-radio-button value="1">Boleta</mat-radio-button>
+                <mat-radio-button value="2">Factura</mat-radio-button>
+            </mat-radio-group>
+        </div>
+    </div>
+
+    <div class="actions-buttons">
+        <button mat-raised-button color="primary" (click)="openSearchProductDialog()">Ir a buscar productos</button>
+        <button mat-raised-button color="accent" (click)="registerOrder()" [disabled]="registForm.invalid">Registrar venta</button>
+    </div>
+</form>

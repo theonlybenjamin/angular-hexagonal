@@ -1,0 +1,20 @@
+<h1>Ingresa tus credenciales</h1>
+<form class="login-form" [formGroup]="loginForm">
+  <mat-form-field class="w-100">
+    <mat-label>Email</mat-label>
+    <input type="email" matInput formControlName="userName" placeholder="email@example.com">
+
+    @if (loginForm.controls['userName'].hasError('required')) {
+      <mat-error>El nombre de usuario es <strong>requerido</strong></mat-error>
+    }
+  </mat-form-field>
+  <mat-form-field class="w-100">
+    <mat-label>Contraseña</mat-label>
+    <input type="password" matInput formControlName="password" placeholder="Contraseña">
+    @if (loginForm.controls['password'].hasError('required')) {
+      <mat-error>Ingrese una contraseña</mat-error>
+    }
+  </mat-form-field>
+  <button mat-raised-button color="primary" class="w-100" (click)="sendUserLoginInformation()"
+    [disabled]="!loginForm.valid">Iniciar Sesión</button>
+</form>

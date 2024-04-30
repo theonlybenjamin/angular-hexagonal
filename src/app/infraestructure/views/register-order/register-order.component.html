@@ -1,0 +1,48 @@
+<div class="container">
+    <div class="order-inputs">
+        <app-register-order-inputs [documentTypes]="documentTypes" (openSearchProductDialogEvent)="openSearchProductDialog()" (registerOrderEvent)="registerOrder()"></app-register-order-inputs>
+    </div>
+    <div class="products-table">
+        <table mat-table [dataSource]="selectedProducts" class="mat-elevation-z8 demo-table">
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef>Id</th>
+                <td mat-cell *matCellDef="let element">{{element.id}}</td>
+            </ng-container>
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef>Nombre</th>
+                <td mat-cell *matCellDef="let element">{{element.name}}</td>
+            </ng-container>
+            <ng-container matColumnDef="price">
+                <th mat-header-cell *matHeaderCellDef>Precio</th>
+                <td mat-cell *matCellDef="let element">S/. {{element.price}}</td>
+            </ng-container>
+            <ng-container matColumnDef="quantity">
+                <th mat-header-cell *matHeaderCellDef>Cantidad</th>
+                <td mat-cell *matCellDef="let element">
+                    <input type="text" value="{{element.quantity}}"
+                        (change)="tableProductsSelected.changeQuantityOfProduct($any($event).target.value, element.id)">
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="finalPrice">
+                <th mat-header-cell *matHeaderCellDef>Importe</th>
+                <td mat-cell *matCellDef="let element">S/. {{element.finalPrice}}</td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            <!-- Row shown when there is no matching data. -->
+            <tr class="mat-mdc-row" *matNoDataRow>
+                <td class="mat-cell no-data" colspan="4">Aún no hay productos seleccionados</td>
+            </tr>
+        </table>
+    </div>
+    <section class="payment-information-container">
+        <mat-card class="payment-information">
+            <mat-card-content>
+                <p>Subtotal: S/. {{subtotal}}</p>
+                <p>IGV (18%): S/. {{igv}}</p>
+                <p>Total: S/. {{total}}</p>
+            </mat-card-content>
+        </mat-card>
+    </section>
+    
+</div>

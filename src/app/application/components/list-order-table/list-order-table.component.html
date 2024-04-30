@@ -1,0 +1,54 @@
+<div class="container-table">
+    <div>
+        <table mat-table [dataSource]="listOrder" class="mat-elevation-z8">
+            <ng-container matColumnDef="orderId">
+                <th mat-header-cell *matHeaderCellDef> Código de la orden de venta </th>
+                <td mat-cell *matCellDef="let data"> {{data.orderId}} </td>
+            </ng-container>
+            <ng-container matColumnDef="documentNumber">
+                <th mat-header-cell *matHeaderCellDef> Número de documento </th>
+                <td mat-cell *matCellDef="let data"> {{data.documentNumber}} </td>
+            </ng-container>
+            <ng-container matColumnDef="clientName">
+                <th mat-header-cell *matHeaderCellDef> Cliente </th>
+                <td mat-cell *matCellDef="let data"> {{data.clientName}} </td>
+            </ng-container>
+            <ng-container matColumnDef="createdDate">
+                <th mat-header-cell *matHeaderCellDef> Fecha de creación </th>
+                <td mat-cell *matCellDef="let data"> {{data.createdDate | date: 'dd/MM/yyyy'}} </td>
+            </ng-container>
+            <ng-container matColumnDef="total">
+                <th mat-header-cell *matHeaderCellDef> Total </th>
+                <td mat-cell *matCellDef="let data"> S/. {{data.total}} </td>
+            </ng-container>
+            <ng-container matColumnDef="state">
+                <th mat-header-cell *matHeaderCellDef> Estado </th>
+                <td mat-cell *matCellDef="let data"> {{data.state}} </td>
+            </ng-container>
+            <ng-container matColumnDef="acciones">
+                <th mat-header-cell *matHeaderCellDef> Acciones </th>
+                <td mat-cell *matCellDef="let data">
+                    <button mat-icon-button color="warn" matTooltip="Eliminar" (click)="deleteOrder(data.orderId)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                    @if (data.stateId === 1) {
+                    <button mat-icon-button color="warn" matTooltip="Dar de baja" (click)="cancelOrder(data.orderId)">
+                        <mat-icon>thumb_down</mat-icon>
+                    </button>
+                    } @else {
+                    <button mat-icon-button color="primary" matTooltip="Activar" (click)="activateOrder(data.orderId)">
+                        <mat-icon>thumb_up</mat-icon>
+                    </button>
+                    }
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            <!-- Row shown when there is no matching data. -->
+            <tr class="mat-mdc-row" *matNoDataRow>
+                <td class="mat-cell no-data" colspan="4">No se encontraron ventas registradas en el rango de busqueda
+                    establecido</td>
+            </tr>
+        </table>
+    </div>
+</div>

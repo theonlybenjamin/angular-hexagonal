@@ -1,0 +1,4 @@
+<div class="container">
+    <app-search-order (searchOrderInformation)="searchOrder($event)"></app-search-order>
+    <app-list-order-table [listOrder]="listOrdeSearchResult" (cancelOrderId)="cancelOrder($event)" (deleteOrderId)="deleteOrder($event)" (activateOrderId)="activateOrder($event)"></app-list-order-table>
+</div>

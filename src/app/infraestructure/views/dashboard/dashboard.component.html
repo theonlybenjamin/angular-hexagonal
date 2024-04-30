@@ -1,0 +1,30 @@
+<mat-drawer-container class="container-fluid full-height">
+  <mat-drawer #drawer class="example-sidenav" style="background-color: #002244" mode="side">
+    <div class="offcanvas-body text-white">
+      <div>
+        <mat-nav-list>
+          <div class="nav-item" routerLinkActive="active-link">
+            <a routerLink="/dashboard/listar-ordenes">Listado de ordenes</a>
+          </div>
+          <div class="nav-item" routerLinkActive="active-link">
+            <a routerLink="/dashboard/registrar-orden">Agregar Orden</a>
+          </div>
+        </mat-nav-list>
+      </div>
+    </div>
+  </mat-drawer>
+  <mat-drawer-content>
+    <header class="header">
+      <button mat-icon-button class="btn-sidebar" color="white" (click)="drawer.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <div class="counter">
+        {{timer}}
+      </div>
+      <button class="log-out" mat-flat-button color="warn" (click)="closeSession()" >Cerrar Sesión</button>
+    </header>
+    <div>
+      <router-outlet></router-outlet>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>

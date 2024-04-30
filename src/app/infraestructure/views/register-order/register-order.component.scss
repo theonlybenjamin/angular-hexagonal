@@ -1,0 +1,26 @@
+.container {
+  margin: 0px 90px;
+  margin-top: 40px;
+
+  .order-inputs {
+    margin-bottom: 30px;
+  }
+
+  .products-table {
+    margin: 0px 10px;
+
+    .no-data {
+      padding: 20px;
+    }
+
+  }
+
+  .payment-information-container {
+    display: flex;
+    justify-content: flex-end;
+    .payment-information {
+      margin: 30px;
+      width: 400px;
+    }
+  }
+}
